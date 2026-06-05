@@ -540,6 +540,282 @@
 
     <!-- ==================== JAVASCRIPT GAME LOGIC ==================== -->
     <script>
+        // ==================== GAME STATE ====================
+        var gameState = {
+            score: 0,
+            clicks: 0,
+            perClick: 1,
+            upgrades: {},
+            buildings: {},
+            totalUpgradesBought: 0,
+            totalBuildingsBought: 0,
+            passiveIncome: 0,
+            gameActive: false
+        };
+
+        // ==================== UPGRADE DEFINITIONS ====================
+        var upgrades = [
+            { id: 'golden-retriever', name: 'Golden Retriever', emoji: '🐕', baseCost: 10,   benefit: 1,   description: 'Friendly helper (Click Power +1)'       },
+            { id: 'poodle',           name: 'Poodle',           emoji: '🐩', baseCost: 50,   benefit: 5,   description: 'Fancy pup (Click Power +5)'              },
+            { id: 'bulldog',          name: 'Bulldog',          emoji: '🐶', baseCost: 100,  benefit: 10,  description: 'Strong friend (Click Power +10)'         },
+            { id: 'husky',            name: 'Husky',            emoji: '🐺', baseCost: 250,  benefit: 25,  description: 'Powerful wolf-dog (Click Power +25)'     },
+            { id: 'dachshund',        name: 'Dachshund',        emoji: '🌭', baseCost: 500,  benefit: 50,  description: 'Long boy (Click Power +50)'              },
+            { id: 'shiba-inu',        name: 'Shiba Inu',        emoji: '🦊', baseCost: 1000, benefit: 100, description: 'Such wow (Click Power +100)'             }
+        ];
+
+        // ==================== BUILDINGS DEFINITIONS ====================
+        var buildings = [
+            { id: 'dog-shelter',  name: 'Dog Shelter',  emoji: '🏘️', baseCost: 50,     benefit: 10,     description: 'Houses rescue pugs (+10 pugs per shelter)'              },
+            { id: 'kennel',       name: 'Kennel',       emoji: '🏠', baseCost: 200,    benefit: 50,     description: 'Breeding facility (+50 pugs per kennel)'                },
+            { id: 'pug-mansion',  name: 'Pug Mansion',  emoji: '🏰', baseCost: 500,    benefit: 250,    description: 'Luxury pug resort (+250 pugs per mansion)'              },
+            { id: 'pug-city',     name: 'Pug City',     emoji: '🌆', baseCost: 10000,  benefit: 1000,   description: 'A bustling metropolis of pugs! (+1000 pugs per city)'   },
+            { id: 'pug-country',  name: 'Pug Country',  emoji: '🗺️', baseCost: 50000,  benefit: 1750,   description: 'An entire nation of pugs! (+1750 pugs per country)'     },
+            { id: 'pug-planet',   name: 'Pug Planet',   emoji: '🌍', baseCost: 100000, benefit: 2500,   description: 'An entire planet of pugs! (+2500 pugs per planet)'      },
+            { id: 'pug-universe', name: 'Pug Universe', emoji: '🌌', baseCost: 750000, benefit: 155000, description: 'A whole universe of pugs! (+155000 pugs per universe)'  }
+        ];
+
+        // ==================== INITIALIZE ====================
+        function initializeGame() {
+            gameState.score = 0;
+            gameState.clicks = 0;
+            gameState.perClick = 1;
+            gameState.upgrades = {};
+            gameState.buildings = {};
+            gameState.totalUpgradesBought = 0;
+            gameState.totalBuildingsBought = 0;
+            gameState.passiveIncome = 0;
+            gameState.gameActive = true;
+
+            for (var i = 0; i < upgrades.length; i++) {
+                gameState.upgrades[upgrades[i].id] = 0;
+            }
+            for (var j = 0; j < buildings.length; j++) {
+                gameState.buildings[buildings[j].id] = 0;
+            }
+        }
+
+        // ==================== START GAME ====================
+        function startGame() {
+            initializeGame();
+            document.getElementById('startScreen').classList.add('hidden');
+            document.getElementById('gameScreen').classList.add('active');
+            renderUpgrades();
+            renderBuildings();
+            updateDisplay();
+        }
+
+        // ==================== CLICK THE PUG ====================
+        function clickPug() {
+            if (!gameState.gameActive) return;
+
+            gameState.score += gameState.perClick;
+            gameState.clicks++;
+
+            var pugButton = document.getElementById('pugButton');
+            pugButton.classList.add('bounce');
+            setTimeout(function() { pugButton.classList.remove('bounce'); }, 600);
+
+            showFloatingText(gameState.perClick);
+            updateDisplay();
+            renderUpgrades();
+            renderBuildings();
+
+            if (gameState.clicks >= 1000) {
+                endGame();
+            }
+        }
+
+        // ==================== FLOATING TEXT ====================
+        function showFloatingText(amount) {
+            var text = document.createElement('div');
+            text.textContent = '+' + amount;
+            text.className = 'float-text positive';
+            text.style.left = (window.innerWidth / 2) + 'px';
+            text.style.top = (window.innerHeight / 2) + 'px';
+            document.body.appendChild(text);
+            setTimeout(function() { text.remove(); }, 1000);
+        }
+
+        // ==================== RENDER UPGRADES ====================
+        function renderUpgrades() {
+            var list = document.getElementById('upgradesList');
+            list.innerHTML = '';
+
+            for (var i = 0; i < upgrades.length; i++) {
+                var upgrade = upgrades[i];
+                var count = gameState.upgrades[upgrade.id];
+                var cost = Math.floor(upgrade.baseCost * Math.pow(1.15, count));
+                var canAfford = gameState.score >= cost;
+
+                var div = document.createElement('div');
+                div.className = 'upgrade-item';
+
+                var info = document.createElement('div');
+                info.className = 'upgrade-info';
+                info.innerHTML = '<h4>' + upgrade.emoji + ' ' + upgrade.name + '</h4>' +
+                                 '<p>' + upgrade.description + '</p>' +
+                                 '<p style="color:#764ba2;font-weight:bold;margin-top:5px;">Owned: ' + count + '</p>';
+
+                var costDiv = document.createElement('div');
+                costDiv.className = 'upgrade-cost';
+                costDiv.textContent = cost + ' pugs';
+
+                var btn = document.createElement('button');
+                btn.className = 'upgrade-button';
+                btn.textContent = 'BUY';
+                btn.disabled = !canAfford;
+                // Capture upgrade id in a closure
+                (function(id) {
+                    btn.onclick = function() { buyUpgrade(id); };
+                })(upgrade.id);
+
+                div.appendChild(info);
+                div.appendChild(costDiv);
+                div.appendChild(btn);
+                list.appendChild(div);
+            }
+        }
+
+        // ==================== BUY UPGRADE ====================
+        function buyUpgrade(upgradeId) {
+            if (!gameState.gameActive) return;
+
+            var upgrade = null;
+            for (var i = 0; i < upgrades.length; i++) {
+                if (upgrades[i].id === upgradeId) { upgrade = upgrades[i]; break; }
+            }
+            if (!upgrade) return;
+
+            var count = gameState.upgrades[upgradeId];
+            var cost = Math.floor(upgrade.baseCost * Math.pow(1.15, count));
+
+            if (gameState.score >= cost) {
+                gameState.score -= cost;
+                gameState.perClick += upgrade.benefit;
+                gameState.upgrades[upgradeId]++;
+                gameState.totalUpgradesBought++;
+                updateDisplay();
+                renderUpgrades();
+            }
+        }
+
+        // ==================== RENDER BUILDINGS ====================
+        function renderBuildings() {
+            var list = document.getElementById('buildingsList');
+            list.innerHTML = '';
+
+            for (var i = 0; i < buildings.length; i++) {
+                var building = buildings[i];
+                var count = gameState.buildings[building.id];
+                var cost = Math.floor(building.baseCost * Math.pow(1.15, count));
+                var canAfford = gameState.clicks >= cost;
+
+                var div = document.createElement('div');
+                div.className = 'upgrade-item';
+
+                var info = document.createElement('div');
+                info.className = 'upgrade-info';
+                info.innerHTML = '<h4>' + building.emoji + ' ' + building.name + '</h4>' +
+                                 '<p>' + building.description + '</p>' +
+                                 '<p style="color:#764ba2;font-weight:bold;margin-top:5px;">Owned: ' + count + '</p>';
+
+                var costDiv = document.createElement('div');
+                costDiv.className = 'upgrade-cost';
+                costDiv.style.color = '#667eea';
+                costDiv.textContent = cost + ' clicks';
+
+                var btn = document.createElement('button');
+                btn.className = 'upgrade-button';
+                btn.textContent = 'BUY';
+                btn.disabled = !canAfford;
+                // Capture building id in a closure
+                (function(id) {
+                    btn.onclick = function() { buyBuilding(id); };
+                })(building.id);
+
+                div.appendChild(info);
+                div.appendChild(costDiv);
+                div.appendChild(btn);
+                list.appendChild(div);
+            }
+        }
+
+        // ==================== BUY BUILDING ====================
+        function buyBuilding(buildingId) {
+            if (!gameState.gameActive) return;
+
+            var building = null;
+            for (var i = 0; i < buildings.length; i++) {
+                if (buildings[i].id === buildingId) { building = buildings[i]; break; }
+            }
+            if (!building) return;
+
+            var count = gameState.buildings[buildingId];
+            var cost = Math.floor(building.baseCost * Math.pow(1.15, count));
+
+            if (gameState.clicks >= cost) {
+                gameState.clicks -= cost;
+                gameState.passiveIncome += building.benefit;
+                gameState.buildings[buildingId]++;
+                gameState.totalBuildingsBought++;
+                updateDisplay();
+                renderBuildings();
+            }
+        }
+
+        // ==================== UPDATE DISPLAY ====================
+        function updateDisplay() {
+            document.getElementById('scoreDisplay').textContent = Math.floor(gameState.score);
+            document.getElementById('clickCounter').textContent = Math.floor(gameState.clicks);
+            document.getElementById('perClickDisplay').textContent = '+' + gameState.perClick;
+            document.getElementById('totalClicks').textContent = Math.floor(gameState.clicks);
+        }
+
+        // ==================== END GAME ====================
+        function endGame() {
+            gameState.gameActive = false;
+            document.getElementById('gameScreen').classList.remove('active');
+            document.getElementById('gameOverScreen').classList.add('active');
+
+            var favoriteBreed = 'None';
+            var maxCount = 0;
+            for (var upgradeId in gameState.upgrades) {
+                if (gameState.upgrades[upgradeId] > maxCount) {
+                    maxCount = gameState.upgrades[upgradeId];
+                    for (var i = 0; i < upgrades.length; i++) {
+                        if (upgrades[i].id === upgradeId) { favoriteBreed = upgrades[i].name; break; }
+                    }
+                }
+            }
+
+            document.getElementById('finalScore').textContent = Math.floor(gameState.score);
+            document.getElementById('finalClicks').textContent = Math.floor(gameState.clicks);
+            document.getElementById('finalUpgrades').textContent = gameState.totalUpgradesBought + gameState.totalBuildingsBought;
+            document.getElementById('finalPower').textContent = '+' + gameState.perClick;
+            document.getElementById('favoriteBreed').textContent = favoriteBreed;
+        }
+
+        // ==================== MENU NAVIGATION ====================
+        function restartGame() {
+            document.getElementById('gameOverScreen').classList.remove('active');
+            startGame();
+        }
+
+        function goToMenu() {
+            document.getElementById('gameOverScreen').classList.remove('active');
+            document.getElementById('startScreen').classList.remove('hidden');
+        }
+
+        // ==================== KEYBOARD CONTROLS ====================
+        document.addEventListener('keydown', function(event) {
+            if (event.code === 'Space' && gameState.gameActive) {
+                event.preventDefault();
+                clickPug();
+            }
+        });
+    </script>
+</body>
+</html>
         // ==================== GAME STATE ==================== 
         // This object holds all the data about the current game
         const gameState = {
