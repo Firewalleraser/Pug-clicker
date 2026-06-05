@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -445,7 +445,7 @@
         
         <!-- ==================== START SCREEN ==================== -->
         <div id="startScreen">
-            <h1 class="game-title">🐕 PUG CLICKER 🐕</h1>
+            <h1 class="game-title">ðŸ• PUG CLICKER ðŸ•</h1>
             <p class="game-subtitle">The Ultimate Dog Lover's Clicker Game</p>
             <button class="start-button" onclick="startGame()">START GAME</button>
             
@@ -468,7 +468,7 @@
                     <div class="score-label">PUGS</div>
                     <div class="score-value" id="scoreDisplay">0</div>
                 </div>
-                <div class="title-center">🐕 PUG CLICKER 🐕</div>
+                <div class="title-center">ðŸ• PUG CLICKER ðŸ•</div>
                 <div class="stats-right">
                     <div class="stat">
                         <span class="stat-label">Clicks:</span>
@@ -486,7 +486,7 @@
                 <!-- Clicker Section -->
                 <div class="clicker-section">
                     <div class="click-text">Click the pug!</div>
-                    <button class="pug-button" id="pugButton" onclick="clickPug()">🐶</button>
+                    <button class="pug-button" id="pugButton" onclick="clickPug()">ðŸ¶</button>
                     <div class="click-count">
                         <span id="totalClicks">0</span> total clicks
                     </div>
@@ -494,7 +494,7 @@
 
                 <!-- Shop Section -->
                 <div class="shop-section">
-                    <div class="shop-title">🛍️ UPGRADES 🛍️</div>
+                    <div class="shop-title">ðŸ›ï¸ UPGRADES ðŸ›ï¸</div>
                     <div id="upgradesList"></div>
                 </div>
             </div>
@@ -502,7 +502,7 @@
             <!-- Buildings Section -->
             <div style="margin-top: 30px;">
                 <div class="shop-section">
-                    <div class="shop-title">🏠 SHELTERS & KENNELS 🏠</div>
+                    <div class="shop-title">ðŸ  SHELTERS & KENNELS ðŸ </div>
                     <div id="buildingsList"></div>
                 </div>
             </div>
@@ -555,23 +555,23 @@
 
         // ==================== UPGRADE DEFINITIONS ====================
         var upgrades = [
-            { id: 'golden-retriever', name: 'Golden Retriever', emoji: '🐕', baseCost: 10,   benefit: 1,   description: 'Friendly helper (Click Power +1)'       },
-            { id: 'poodle',           name: 'Poodle',           emoji: '🐩', baseCost: 50,   benefit: 5,   description: 'Fancy pup (Click Power +5)'              },
-            { id: 'bulldog',          name: 'Bulldog',          emoji: '🐶', baseCost: 100,  benefit: 10,  description: 'Strong friend (Click Power +10)'         },
-            { id: 'husky',            name: 'Husky',            emoji: '🐺', baseCost: 250,  benefit: 25,  description: 'Powerful wolf-dog (Click Power +25)'     },
-            { id: 'dachshund',        name: 'Dachshund',        emoji: '🌭', baseCost: 500,  benefit: 50,  description: 'Long boy (Click Power +50)'              },
-            { id: 'shiba-inu',        name: 'Shiba Inu',        emoji: '🦊', baseCost: 1000, benefit: 100, description: 'Such wow (Click Power +100)'             }
+            { id: 'golden-retriever', name: 'Golden Retriever', emoji: 'ðŸ•', baseCost: 10,   benefit: 1,   description: 'Friendly helper (Click Power +1)'       },
+            { id: 'poodle',           name: 'Poodle',           emoji: 'ðŸ©', baseCost: 50,   benefit: 5,   description: 'Fancy pup (Click Power +5)'              },
+            { id: 'bulldog',          name: 'Bulldog',          emoji: 'ðŸ¶', baseCost: 100,  benefit: 10,  description: 'Strong friend (Click Power +10)'         },
+            { id: 'husky',            name: 'Husky',            emoji: 'ðŸº', baseCost: 250,  benefit: 25,  description: 'Powerful wolf-dog (Click Power +25)'     },
+            { id: 'dachshund',        name: 'Dachshund',        emoji: 'ðŸŒ­', baseCost: 500,  benefit: 50,  description: 'Long boy (Click Power +50)'              },
+            { id: 'shiba-inu',        name: 'Shiba Inu',        emoji: 'ðŸ¦Š', baseCost: 1000, benefit: 100, description: 'Such wow (Click Power +100)'             }
         ];
 
         // ==================== BUILDINGS DEFINITIONS ====================
         var buildings = [
-            { id: 'dog-shelter',  name: 'Dog Shelter',  emoji: '🏘️', baseCost: 50,     benefit: 10,     description: 'Houses rescue pugs (+10 pugs per shelter)'              },
-            { id: 'kennel',       name: 'Kennel',       emoji: '🏠', baseCost: 200,    benefit: 50,     description: 'Breeding facility (+50 pugs per kennel)'                },
-            { id: 'pug-mansion',  name: 'Pug Mansion',  emoji: '🏰', baseCost: 500,    benefit: 250,    description: 'Luxury pug resort (+250 pugs per mansion)'              },
-            { id: 'pug-city',     name: 'Pug City',     emoji: '🌆', baseCost: 10000,  benefit: 1000,   description: 'A bustling metropolis of pugs! (+1000 pugs per city)'   },
-            { id: 'pug-country',  name: 'Pug Country',  emoji: '🗺️', baseCost: 50000,  benefit: 1750,   description: 'An entire nation of pugs! (+1750 pugs per country)'     },
-            { id: 'pug-planet',   name: 'Pug Planet',   emoji: '🌍', baseCost: 100000, benefit: 2500,   description: 'An entire planet of pugs! (+2500 pugs per planet)'      },
-            { id: 'pug-universe', name: 'Pug Universe', emoji: '🌌', baseCost: 750000, benefit: 155000, description: 'A whole universe of pugs! (+155000 pugs per universe)'  }
+            { id: 'dog-shelter',  name: 'Dog Shelter',  emoji: 'ðŸ˜ï¸', baseCost: 50,     benefit: 10,     description: 'Houses rescue pugs (+10 pugs per shelter)'              },
+            { id: 'kennel',       name: 'Kennel',       emoji: 'ðŸ ', baseCost: 200,    benefit: 50,     description: 'Breeding facility (+50 pugs per kennel)'                },
+            { id: 'pug-mansion',  name: 'Pug Mansion',  emoji: 'ðŸ°', baseCost: 500,    benefit: 250,    description: 'Luxury pug resort (+250 pugs per mansion)'              },
+            { id: 'pug-city',     name: 'Pug City',     emoji: 'ðŸŒ†', baseCost: 10000,  benefit: 1000,   description: 'A bustling metropolis of pugs! (+1000 pugs per city)'   },
+            { id: 'pug-country',  name: 'Pug Country',  emoji: 'ðŸ—ºï¸', baseCost: 50000,  benefit: 1750,   description: 'An entire nation of pugs! (+1750 pugs per country)'     },
+            { id: 'pug-planet',   name: 'Pug Planet',   emoji: 'ðŸŒ', baseCost: 100000, benefit: 2500,   description: 'An entire planet of pugs! (+2500 pugs per planet)'      },
+            { id: 'pug-universe', name: 'Pug Universe', emoji: 'ðŸŒŒ', baseCost: 750000, benefit: 155000, description: 'A whole universe of pugs! (+155000 pugs per universe)'  }
         ];
 
         // ==================== INITIALIZE ====================
@@ -808,437 +808,6 @@
 
         // ==================== KEYBOARD CONTROLS ====================
         document.addEventListener('keydown', function(event) {
-            if (event.code === 'Space' && gameState.gameActive) {
-                event.preventDefault();
-                clickPug();
-            }
-        });
-    </script>
-</body>
-</html>
-        // ==================== GAME STATE ==================== 
-        // This object holds all the data about the current game
-        const gameState = {
-            score: 0,                    // Total pugs earned
-            clicks: 0,                   // Total number of clicks made
-            perClick: 1,                 // Pugs earned per click
-            upgrades: {},                // Track how many of each upgrade we've bought
-            buildings: {},               // Track how many of each building we've bought
-            totalUpgradesBought: 0,      // Count of all upgrades purchased
-            totalBuildingsBought: 0,     // Count of all buildings purchased
-            passiveIncome: 0,            // Pugs earned per second from buildings
-            gameActive: false            // Is the game currently playing?
-        };
-
-        // ==================== UPGRADE DEFINITIONS ====================
-        // Each upgrade has a name, emoji, cost, benefit, and description
-        const upgrades = [
-            {
-                id: 'golden-retriever',
-                name: 'Golden Retriever',
-                emoji: '🐕‍🦺',
-                baseCost: 10,
-                benefit: 1,
-                description: 'Friendly helper (Click Power +1)'
-            },
-            {
-                id: 'poodle',
-                name: 'Poodle',
-                emoji: '🐩',
-                baseCost: 50,
-                benefit: 5,
-                description: 'Fancy pup (Click Power +5)'
-            },
-            {
-                id: 'bulldog',
-                name: 'Bulldog',
-                emoji: '🐂',
-                baseCost: 100,
-                benefit: 10,
-                description: 'Strong friend (Click Power +10)'
-            },
-            {
-                id: 'husky',
-                name: 'Husky',
-                emoji: '🐺',
-                baseCost: 250,
-                benefit: 25,
-                description: 'Powerful wolf-dog (Click Power +25)'
-            },
-            {
-                id: 'dachshund',
-                name: 'Dachshund',
-                emoji: '🌭',
-                baseCost: 500,
-                benefit: 50,
-                description: 'Long boy (Click Power +50)'
-            },
-            {
-                id: 'shiba-inu',
-                name: 'Shiba Inu',
-                emoji: '🐕',
-                baseCost: 1000,
-                benefit: 100,
-                description: 'Such wow (Click Power +100)'
-            }
-        ];
-
-        // ==================== BUILDINGS DEFINITIONS ====================
-        // Buildings are purchased with clicks instead of pugs
-        const buildings = [
-            {
-                id: 'dog-shelter',
-                name: 'Dog Shelter',
-                emoji: '🏘️',
-                baseCost: 50,
-                benefit: 10,
-                description: 'Houses rescue pugs (Earn +10 pugs per shelter)'
-            },
-            {
-                id: 'kennel',
-                name: 'Kennel',
-                emoji: '🏠',
-                baseCost: 200,
-                benefit: 50,
-                description: 'Breeding facility (Earn +50 pugs per kennel)'
-            },
-            {
-                id: 'pug-mansion',
-                name: 'Pug Mansion',
-                emoji: '🏰',
-                baseCost: 500,
-                benefit: 250,
-                description: 'Luxury pug resort (Earn +250 pugs per mansion)'
-            },
-            {
-                id: 'pug-city',
-                name: 'Pug City',
-                emoji: '🌆',
-                baseCost: 10000,
-                benefit: 1000,
-                description: 'A bustling metropolis of pugs! (Earn +1000 pugs per city)'
-            },
-            {
-                id: 'pug-country',
-                name: 'Pug Country',
-                emoji: '🇵🇺',
-                baseCost: 50000,
-                benefit: 1750,
-                description: 'An entire nation dedicated to pugs! (Earn +1750 pugs per country)'
-            },
-            {
-                id: 'pug-planet',
-                name: 'Pug Planet',
-                emoji: '🌍',
-                baseCost: 100000,
-                benefit: 2500,
-                description: 'An entire planet of pugs! (Earn +2500 pugs per planet)'
-            },
-            {
-                id: 'pug-universe',
-                name: 'Pug Universe',
-                emoji: '🌌',
-                baseCost: 750000,
-                benefit: 155000,
-                description: 'A whole universe dedicated to pugs! (Earn +155000 pugs per universe)'
-            }
-        ];
-
-        // ==================== GAME INITIALIZATION ====================
-        /**
-         * Initialize game state when the game starts
-         */
-        function initializeGame() {
-            gameState.score = 0;
-            gameState.clicks = 0;
-            gameState.perClick = 1;
-            gameState.upgrades = {};
-            gameState.buildings = {};
-            gameState.totalUpgradesBought = 0;
-            gameState.totalBuildingsBought = 0;
-            gameState.passiveIncome = 0;
-            gameState.gameActive = true;
-
-            // Initialize upgrade counts to 0
-            upgrades.forEach(upgrade => {
-                gameState.upgrades[upgrade.id] = 0;
-            });
-
-            // Initialize building counts to 0
-            buildings.forEach(building => {
-                gameState.buildings[building.id] = 0;
-            });
-        }
-
-        // ==================== GAME START ====================
-        /**
-         * Start the game: hide start screen, show game screen
-         */
-        function startGame() {
-            initializeGame();
-            document.getElementById('startScreen').classList.add('hidden');
-            document.getElementById('gameScreen').classList.add('active');
-            renderUpgrades();
-            renderBuildings();
-            updateDisplay();
-        }
-
-        // ==================== CLICKING LOGIC ====================
-        /**
-         * Handle when the player clicks the pug
-         * Adds pugs to the score and updates the display
-         */
-        function clickPug() {
-            if (!gameState.gameActive) return;
-
-            // Add pugs based on current click power
-            gameState.score += gameState.perClick;
-            gameState.clicks++;
-
-            // Visual feedback
-            const pugButton = document.getElementById('pugButton');
-            pugButton.classList.add('bounce');
-            setTimeout(() => pugButton.classList.remove('bounce'), 600);
-
-            // Show floating text with amount earned
-            showFloatingText(gameState.perClick);
-
-            // Update the display
-            updateDisplay();
-
-            // Check if game should end (after 1000 clicks)
-            if (gameState.clicks >= 1000) {
-                endGame();
-            }
-        }
-
-        // ==================== FLOATING TEXT ANIMATION ====================
-        /**
-         * Show a floating text above the pug button to show points earned
-         * @param {number} amount - The amount of pugs earned
-         */
-        function showFloatingText(amount) {
-            const text = document.createElement('div');
-            text.textContent = '+' + amount;
-            text.className = 'float-text positive';
-            text.style.left = (window.innerWidth / 2) + 'px';
-            text.style.top = (window.innerHeight / 2) + 'px';
-            document.body.appendChild(text);
-
-            // Remove the element after animation completes
-            setTimeout(() => text.remove(), 1000);
-        }
-
-        // ==================== UPGRADE SYSTEM ====================
-        /**
-         * Render all available upgrades in the shop
-         */
-        function renderUpgrades() {
-            const upgradesList = document.getElementById('upgradesList');
-            upgradesList.innerHTML = '';
-
-            upgrades.forEach(upgrade => {
-                const count = gameState.upgrades[upgrade.id];
-                const cost = upgrade.baseCost * Math.pow(1.15, count); // Cost increases with each purchase
-                const canAfford = gameState.score >= cost;
-
-                const upgradeElement = document.createElement('div');
-                upgradeElement.className = 'upgrade-item';
-                upgradeElement.innerHTML = `
-                    <div class="upgrade-info">
-                        <h4>${upgrade.emoji} ${upgrade.name}</h4>
-                        <p>${upgrade.description}</p>
-                        <p style="color: #764ba2; font-weight: bold; margin-top: 5px;">Owned: ${count}</p>
-                    </div>
-                    <div class="upgrade-cost">${Math.floor(cost)}</div>
-                    <button class="upgrade-button" 
-                            data-id="${upgrade.id}"
-                            data-type="upgrade"
-                            ${!canAfford ? 'disabled' : ''}>
-                        BUY
-                    </button>
-                `;
-
-                upgradesList.appendChild(upgradeElement);
-            });
-
-            // Attach event listeners
-            document.querySelectorAll('[data-type="upgrade"]').forEach(button => {
-                button.onclick = function(e) {
-                    e.preventDefault();
-                    buyUpgrade(this.dataset.id);
-                };
-            });
-        }
-
-        /**
-         * Purchase an upgrade
-         * @param {string} upgradeId - The ID of the upgrade to purchase
-         */
-        function buyUpgrade(upgradeId) {
-            if (!gameState.gameActive) return;
-
-            const upgrade = upgrades.find(u => u.id === upgradeId);
-            if (!upgrade) return;
-
-            const count = gameState.upgrades[upgradeId];
-            const cost = upgrade.baseCost * Math.pow(1.15, count);
-
-            // Check if player can afford it
-            if (gameState.score >= cost) {
-                // Deduct cost and apply benefit
-                gameState.score -= cost;
-                gameState.perClick += upgrade.benefit;
-                gameState.upgrades[upgradeId]++;
-                gameState.totalUpgradesBought++;
-
-                // Update displays
-                updateDisplay();
-                renderUpgrades();
-            }
-        }
-
-        // ==================== BUILDING SYSTEM ====================
-        /**
-         * Render all available buildings
-         */
-        function renderBuildings() {
-            const buildingsList = document.getElementById('buildingsList');
-            buildingsList.innerHTML = '';
-
-            buildings.forEach(building => {
-                const count = gameState.buildings[building.id];
-                const cost = building.baseCost * Math.pow(1.15, count); // Cost increases with each purchase
-                const canAfford = gameState.clicks >= cost;
-
-                const buildingElement = document.createElement('div');
-                buildingElement.className = 'upgrade-item';
-                buildingElement.innerHTML = `
-                    <div class="upgrade-info">
-                        <h4>${building.emoji} ${building.name}</h4>
-                        <p>${building.description}</p>
-                        <p style="color: #764ba2; font-weight: bold; margin-top: 5px;">Owned: ${count}</p>
-                    </div>
-                    <div class="upgrade-cost" style="color: #667eea;">${Math.floor(cost)} clicks</div>
-                    <button class="upgrade-button" 
-                            data-id="${building.id}"
-                            data-type="building"
-                            ${!canAfford ? 'disabled' : ''}>
-                        BUY
-                    </button>
-                `;
-
-                buildingsList.appendChild(buildingElement);
-            });
-
-            // Attach event listeners
-            document.querySelectorAll('[data-type="building"]').forEach(button => {
-                button.onclick = function(e) {
-                    e.preventDefault();
-                    buyBuilding(this.dataset.id);
-                };
-            });
-        }
-
-        /**
-         * Purchase a building using clicks
-         * @param {string} buildingId - The ID of the building to purchase
-         */
-        function buyBuilding(buildingId) {
-            if (!gameState.gameActive) return;
-
-            const building = buildings.find(b => b.id === buildingId);
-            if (!building) return;
-
-            const count = gameState.buildings[buildingId];
-            const cost = building.baseCost * Math.pow(1.15, count);
-
-            // Check if player has enough clicks
-            if (gameState.clicks >= cost) {
-                // Deduct clicks and apply benefit
-                gameState.clicks -= cost;
-                gameState.passiveIncome += building.benefit;
-                gameState.buildings[buildingId]++;
-                gameState.totalBuildingsBought++;
-
-                // Update displays
-                updateDisplay();
-                renderBuildings();
-            }
-        }
-
-        // ==================== DISPLAY UPDATES ====================
-        /**
-         * Update all game display elements
-         */
-        function updateDisplay() {
-            // Update score
-            document.getElementById('scoreDisplay').textContent = gameState.score;
-            
-            // Update click counter
-            document.getElementById('clickCounter').textContent = gameState.clicks;
-            
-            // Update per-click value
-            document.getElementById('perClickDisplay').textContent = '+' + gameState.perClick;
-            
-            // Update total clicks shown
-            document.getElementById('totalClicks').textContent = gameState.clicks;
-        }
-
-        // ==================== GAME ENDING ====================
-        /**
-         * End the game and show the game over screen
-         */
-        function endGame() {
-            gameState.gameActive = false;
-
-            // Hide game screen, show game over screen
-            document.getElementById('gameScreen').classList.remove('active');
-            document.getElementById('gameOverScreen').classList.add('active');
-
-            // Calculate favorite breed (the one we bought most of)
-            let favoriteBreed = 'None';
-            let maxCount = 0;
-            for (const upgradeId in gameState.upgrades) {
-                const count = gameState.upgrades[upgradeId];
-                if (count > maxCount) {
-                    maxCount = count;
-                    const upgrade = upgrades.find(u => u.id === upgradeId);
-                    favoriteBreed = upgrade ? upgrade.name : 'Unknown';
-                }
-            }
-
-            // Display final stats
-            document.getElementById('finalScore').textContent = gameState.score;
-            document.getElementById('finalClicks').textContent = gameState.clicks;
-            document.getElementById('finalUpgrades').textContent = gameState.totalUpgradesBought + gameState.totalBuildingsBought;
-            document.getElementById('finalPower').textContent = '+' + gameState.perClick;
-            document.getElementById('favoriteBreed').textContent = favoriteBreed;
-        }
-
-        // ==================== MENU NAVIGATION ====================
-        /**
-         * Restart the game
-         */
-        function restartGame() {
-            document.getElementById('gameOverScreen').classList.remove('active');
-            document.getElementById('gameScreen').classList.add('active');
-            startGame();
-        }
-
-        /**
-         * Return to the main menu
-         */
-        function goToMenu() {
-            document.getElementById('gameOverScreen').classList.remove('active');
-            document.getElementById('startScreen').classList.remove('hidden');
-        }
-
-        // ==================== KEYBOARD CONTROLS ====================
-        /**
-         * Allow spacebar to click the pug
-         */
-        document.addEventListener('keydown', (event) => {
             if (event.code === 'Space' && gameState.gameActive) {
                 event.preventDefault();
                 clickPug();
