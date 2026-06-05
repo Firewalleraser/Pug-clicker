@@ -776,20 +776,13 @@
                     </div>
                     <div class="upgrade-cost">${Math.floor(cost)}</div>
                     <button class="upgrade-button" 
-                            data-upgrade-id="${upgrade.id}"
+                            onclick="buyUpgrade('${upgrade.id}')"
                             ${!canAfford ? 'disabled' : ''}>
                         BUY
                     </button>
                 `;
 
                 upgradesList.appendChild(upgradeElement);
-            });
-
-            // Attach event listeners to all upgrade buttons
-            document.querySelectorAll('.upgrade-button[data-upgrade-id]').forEach(button => {
-                button.addEventListener('click', function() {
-                    buyUpgrade(this.getAttribute('data-upgrade-id'));
-                });
             });
         }
 
@@ -843,20 +836,13 @@
                     </div>
                     <div class="upgrade-cost" style="color: #667eea;">${Math.floor(cost)} clicks</div>
                     <button class="upgrade-button" 
-                            data-building-id="${building.id}"
+                            onclick="buyBuilding('${building.id}')"
                             ${!canAfford ? 'disabled' : ''}>
                         BUY
                     </button>
                 `;
 
                 buildingsList.appendChild(buildingElement);
-            });
-
-            // Attach event listeners to all building buttons
-            document.querySelectorAll('.upgrade-button[data-building-id]').forEach(button => {
-                button.addEventListener('click', function() {
-                    buyBuilding(this.getAttribute('data-building-id'));
-                });
             });
         }
 
