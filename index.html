@@ -1,0 +1,814 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pug Clicker - The Ultimate Dog Lover's Game</title>
+    <style>
+        /* ==================== GLOBAL STYLES ==================== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        /* ==================== GAME CONTAINER ==================== */
+        #gameContainer {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            max-width: 900px;
+            width: 100%;
+            padding: 40px;
+            text-align: center;
+        }
+
+        /* ==================== START SCREEN ==================== */
+        #startScreen {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            min-height: 500px;
+        }
+
+        #startScreen.hidden {
+            display: none;
+        }
+
+        .game-title {
+            font-size: 4rem;
+            color: #764ba2;
+            margin-bottom: 20px;
+            font-weight: bold;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .game-subtitle {
+            font-size: 1.5rem;
+            color: #666;
+            margin-bottom: 30px;
+        }
+
+        .start-button {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 20px 60px;
+            font-size: 1.5rem;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: transform 0.3s, box-shadow 0.3s;
+            font-weight: bold;
+        }
+
+        .start-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(118, 75, 162, 0.4);
+        }
+
+        .start-button:active {
+            transform: translateY(-1px);
+        }
+
+        .instructions {
+            margin-top: 40px;
+            color: #666;
+            line-height: 1.8;
+            font-size: 1rem;
+        }
+
+        .instructions h3 {
+            color: #764ba2;
+            margin-top: 20px;
+            margin-bottom: 10px;
+        }
+
+        /* ==================== GAME SCREEN ==================== */
+        #gameScreen {
+            display: none;
+        }
+
+        #gameScreen.active {
+            display: block;
+        }
+
+        .game-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 3px solid #667eea;
+        }
+
+        .score-display {
+            text-align: left;
+            flex: 1;
+        }
+
+        .score-label {
+            font-size: 1rem;
+            color: #999;
+            margin-bottom: 5px;
+        }
+
+        .score-value {
+            font-size: 3rem;
+            color: #764ba2;
+            font-weight: bold;
+        }
+
+        .title-center {
+            flex: 1;
+            font-size: 2rem;
+            font-weight: bold;
+            color: #764ba2;
+        }
+
+        .stats-right {
+            text-align: right;
+            flex: 1;
+        }
+
+        .stat {
+            margin: 5px 0;
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        .stat-label {
+            color: #999;
+        }
+
+        .stat-value {
+            font-weight: bold;
+            color: #764ba2;
+        }
+
+        /* ==================== GAME AREA ==================== */
+        .main-game-area {
+            display: flex;
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+
+        .clicker-section {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .pug-button {
+            background: none;
+            border: none;
+            cursor: pointer;
+            margin-bottom: 20px;
+            transition: transform 0.1s;
+            font-size: 6rem;
+            filter: drop-shadow(0 5px 15px rgba(0, 0, 0, 0.2));
+        }
+
+        .pug-button:hover {
+            transform: scale(1.05);
+        }
+
+        .pug-button:active {
+            transform: scale(0.95);
+        }
+
+        .click-text {
+            color: #666;
+            font-size: 1.1rem;
+            margin-bottom: 10px;
+        }
+
+        .click-count {
+            font-size: 1rem;
+            color: #999;
+        }
+
+        /* ==================== SHOP SECTION ==================== */
+        .shop-section {
+            flex: 1;
+            background: #f8f9fa;
+            border-radius: 15px;
+            padding: 20px;
+            text-align: left;
+        }
+
+        .shop-title {
+            font-size: 1.5rem;
+            color: #764ba2;
+            margin-bottom: 15px;
+            text-align: center;
+            font-weight: bold;
+        }
+
+        .upgrade-item {
+            background: white;
+            padding: 15px;
+            margin-bottom: 10px;
+            border-radius: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border: 2px solid #e0e0e0;
+            transition: all 0.3s;
+        }
+
+        .upgrade-item:hover {
+            border-color: #667eea;
+            background: #f0f4ff;
+        }
+
+        .upgrade-info h4 {
+            color: #333;
+            margin-bottom: 5px;
+            font-size: 1rem;
+        }
+
+        .upgrade-info p {
+            color: #999;
+            font-size: 0.85rem;
+        }
+
+        .upgrade-cost {
+            font-weight: bold;
+            color: #764ba2;
+            font-size: 1.2rem;
+            min-width: 60px;
+            text-align: right;
+        }
+
+        .upgrade-button {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s;
+            margin-left: 10px;
+        }
+
+        .upgrade-button:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(118, 75, 162, 0.4);
+        }
+
+        .upgrade-button:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            opacity: 0.5;
+        }
+
+        /* ==================== GAME OVER SCREEN ==================== */
+        #gameOverScreen {
+            display: none;
+            min-height: 500px;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        #gameOverScreen.active {
+            display: flex;
+        }
+
+        .game-over-title {
+            font-size: 3.5rem;
+            color: #764ba2;
+            margin-bottom: 30px;
+            font-weight: bold;
+        }
+
+        .final-score-container {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 40px;
+            border-radius: 15px;
+            margin-bottom: 40px;
+            min-width: 300px;
+        }
+
+        .final-score-label {
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+            opacity: 0.9;
+        }
+
+        .final-score-value {
+            font-size: 4rem;
+            font-weight: bold;
+        }
+
+        .stats-summary {
+            text-align: left;
+            margin: 30px 0;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 10px;
+            border-left: 5px solid #667eea;
+        }
+
+        .stat-line {
+            padding: 8px 0;
+            font-size: 1.1rem;
+            color: #666;
+        }
+
+        .stat-line strong {
+            color: #764ba2;
+        }
+
+        .button-group {
+            display: flex;
+            gap: 15px;
+            margin-top: 30px;
+        }
+
+        .restart-button, .menu-button {
+            padding: 15px 40px;
+            font-size: 1.1rem;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s;
+        }
+
+        .restart-button {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .restart-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(118, 75, 162, 0.4);
+        }
+
+        .menu-button {
+            background: white;
+            color: #764ba2;
+            border: 2px solid #764ba2;
+        }
+
+        .menu-button:hover {
+            background: #f8f9fa;
+        }
+
+        /* ==================== RESPONSIVE DESIGN ==================== */
+        @media (max-width: 768px) {
+            .main-game-area {
+                flex-direction: column;
+                gap: 20px;
+            }
+
+            .pug-button {
+                font-size: 4rem;
+            }
+
+            .game-title {
+                font-size: 2.5rem;
+            }
+
+            .game-header {
+                flex-direction: column;
+                text-align: center;
+                gap: 15px;
+            }
+
+            .score-display {
+                text-align: center;
+            }
+
+            .stats-right {
+                text-align: center;
+            }
+        }
+
+        /* ==================== ANIMATIONS ==================== */
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+
+        .bounce {
+            animation: bounce 0.6s ease;
+        }
+
+        @keyframes floatUp {
+            0% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+            100% {
+                opacity: 0;
+                transform: translateY(-50px);
+            }
+        }
+
+        .float-text {
+            position: fixed;
+            font-weight: bold;
+            font-size: 1.5rem;
+            pointer-events: none;
+            animation: floatUp 1s ease forwards;
+        }
+
+        .float-text.positive {
+            color: #4CAF50;
+        }
+
+        .float-text.negative {
+            color: #FF6B6B;
+        }
+    </style>
+</head>
+<body>
+    <!-- ==================== MAIN GAME CONTAINER ==================== -->
+    <div id="gameContainer">
+        
+        <!-- ==================== START SCREEN ==================== -->
+        <div id="startScreen">
+            <h1 class="game-title">🐕 PUG CLICKER 🐕</h1>
+            <p class="game-subtitle">The Ultimate Dog Lover's Clicker Game</p>
+            <button class="start-button" onclick="startGame()">START GAME</button>
+            
+            <div class="instructions">
+                <h3>How to Play:</h3>
+                <p>
+                    Click on the pug to earn pug points!<br>
+                    Use your points to buy upgrades and unlock new dog breeds.<br>
+                    Each upgrade makes your pugs more powerful.<br>
+                    How many pugs can YOU collect?
+                </p>
+            </div>
+        </div>
+
+        <!-- ==================== GAME SCREEN ==================== -->
+        <div id="gameScreen">
+            <!-- Game Header with Score and Stats -->
+            <div class="game-header">
+                <div class="score-display">
+                    <div class="score-label">PUGS</div>
+                    <div class="score-value" id="scoreDisplay">0</div>
+                </div>
+                <div class="title-center">🐕 PUG CLICKER 🐕</div>
+                <div class="stats-right">
+                    <div class="stat">
+                        <span class="stat-label">Clicks:</span>
+                        <span class="stat-value" id="clickCounter">0</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-label">Per Click:</span>
+                        <span class="stat-value" id="perClickDisplay">+1</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Main Game Area -->
+            <div class="main-game-area">
+                <!-- Clicker Section -->
+                <div class="clicker-section">
+                    <div class="click-text">Click the pug!</div>
+                    <button class="pug-button" id="pugButton" onclick="clickPug()">🐶</button>
+                    <div class="click-count">
+                        <span id="totalClicks">0</span> total clicks
+                    </div>
+                </div>
+
+                <!-- Shop Section -->
+                <div class="shop-section">
+                    <div class="shop-title">🛍️ UPGRADE SHOP 🛍️</div>
+                    <div id="upgradesList"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ==================== GAME OVER SCREEN ==================== -->
+        <div id="gameOverScreen">
+            <h1 class="game-over-title">GAME OVER</h1>
+            <div class="final-score-container">
+                <div class="final-score-label">Final Pug Count:</div>
+                <div class="final-score-value" id="finalScore">0</div>
+            </div>
+
+            <div class="stats-summary">
+                <div class="stat-line">
+                    <strong>Total Clicks Made:</strong> <span id="finalClicks">0</span>
+                </div>
+                <div class="stat-line">
+                    <strong>Upgrades Purchased:</strong> <span id="finalUpgrades">0</span>
+                </div>
+                <div class="stat-line">
+                    <strong>Final Click Power:</strong> <span id="finalPower">+1</span>
+                </div>
+                <div class="stat-line">
+                    <strong>Favorite Dog Breed:</strong> <span id="favoriteBreed">None</span>
+                </div>
+            </div>
+
+            <div class="button-group">
+                <button class="restart-button" onclick="restartGame()">PLAY AGAIN</button>
+                <button class="menu-button" onclick="goToMenu()">MAIN MENU</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==================== JAVASCRIPT GAME LOGIC ==================== -->
+    <script>
+        // ==================== GAME STATE ==================== 
+        // This object holds all the data about the current game
+        const gameState = {
+            score: 0,                    // Total pugs earned
+            clicks: 0,                   // Total number of clicks made
+            perClick: 1,                 // Pugs earned per click
+            upgrades: {},                // Track how many of each upgrade we've bought
+            totalUpgradesBought: 0,      // Count of all upgrades purchased
+            gameActive: false            // Is the game currently playing?
+        };
+
+        // ==================== UPGRADE DEFINITIONS ====================
+        // Each upgrade has a name, emoji, cost, benefit, and description
+        const upgrades = [
+            {
+                id: 'golden-retriever',
+                name: 'Golden Retriever',
+                emoji: '🐕‍🦺',
+                baseCost: 10,
+                benefit: 1,
+                description: 'Friendly helper (Click Power +1)'
+            },
+            {
+                id: 'poodle',
+                name: 'Poodle',
+                emoji: '🐩',
+                baseCost: 50,
+                benefit: 5,
+                description: 'Fancy pup (Click Power +5)'
+            },
+            {
+                id: 'bulldog',
+                name: 'Bulldog',
+                emoji: '🐂',
+                baseCost: 100,
+                benefit: 10,
+                description: 'Strong friend (Click Power +10)'
+            },
+            {
+                id: 'husky',
+                name: 'Husky',
+                emoji: '🐺',
+                baseCost: 250,
+                benefit: 25,
+                description: 'Powerful wolf-dog (Click Power +25)'
+            },
+            {
+                id: 'dachshund',
+                name: 'Dachshund',
+                emoji: '🌭',
+                baseCost: 500,
+                benefit: 50,
+                description: 'Long boy (Click Power +50)'
+            },
+            {
+                id: 'shiba-inu',
+                name: 'Shiba Inu',
+                emoji: '🐕',
+                baseCost: 1000,
+                benefit: 100,
+                description: 'Such wow (Click Power +100)'
+            }
+        ];
+
+        // ==================== GAME INITIALIZATION ====================
+        /**
+         * Initialize game state when the game starts
+         */
+        function initializeGame() {
+            gameState.score = 0;
+            gameState.clicks = 0;
+            gameState.perClick = 1;
+            gameState.upgrades = {};
+            gameState.totalUpgradesBought = 0;
+            gameState.gameActive = true;
+
+            // Initialize upgrade counts to 0
+            upgrades.forEach(upgrade => {
+                gameState.upgrades[upgrade.id] = 0;
+            });
+        }
+
+        // ==================== GAME START ====================
+        /**
+         * Start the game: hide start screen, show game screen
+         */
+        function startGame() {
+            initializeGame();
+            document.getElementById('startScreen').classList.add('hidden');
+            document.getElementById('gameScreen').classList.add('active');
+            renderUpgrades();
+            updateDisplay();
+        }
+
+        // ==================== CLICKING LOGIC ====================
+        /**
+         * Handle when the player clicks the pug
+         * Adds pugs to the score and updates the display
+         */
+        function clickPug() {
+            if (!gameState.gameActive) return;
+
+            // Add pugs based on current click power
+            gameState.score += gameState.perClick;
+            gameState.clicks++;
+
+            // Visual feedback
+            const pugButton = document.getElementById('pugButton');
+            pugButton.classList.add('bounce');
+            setTimeout(() => pugButton.classList.remove('bounce'), 600);
+
+            // Show floating text with amount earned
+            showFloatingText(gameState.perClick);
+
+            // Update the display
+            updateDisplay();
+
+            // Check if game should end (example: after 1000 clicks)
+            if (gameState.clicks >= 1000000) {
+                endGame();
+            }
+        }
+
+        // ==================== FLOATING TEXT ANIMATION ====================
+        /**
+         * Show a floating text above the pug button to show points earned
+         * @param {number} amount - The amount of pugs earned
+         */
+        function showFloatingText(amount) {
+            const text = document.createElement('div');
+            text.textContent = '+' + amount;
+            text.className = 'float-text positive';
+            text.style.left = (window.innerWidth / 2) + 'px';
+            text.style.top = (window.innerHeight / 2) + 'px';
+            document.body.appendChild(text);
+
+            // Remove the element after animation completes
+            setTimeout(() => text.remove(), 1000);
+        }
+
+        // ==================== UPGRADE SYSTEM ====================
+        /**
+         * Render all available upgrades in the shop
+         */
+        function renderUpgrades() {
+            const upgradesList = document.getElementById('upgradesList');
+            upgradesList.innerHTML = '';
+
+            upgrades.forEach(upgrade => {
+                const count = gameState.upgrades[upgrade.id];
+                const cost = upgrade.baseCost * Math.pow(1.15, count); // Cost increases with each purchase
+                const canAfford = gameState.score >= cost;
+
+                const upgradeElement = document.createElement('div');
+                upgradeElement.className = 'upgrade-item';
+                upgradeElement.innerHTML = `
+                    <div class="upgrade-info">
+                        <h4>${upgrade.emoji} ${upgrade.name}</h4>
+                        <p>${upgrade.description}</p>
+                        <p style="color: #764ba2; font-weight: bold; margin-top: 5px;">Owned: ${count}</p>
+                    </div>
+                    <div class="upgrade-cost">${Math.floor(cost)}</div>
+                    <button class="upgrade-button" 
+                            onclick="buyUpgrade('${upgrade.id}')"
+                            ${!canAfford ? 'disabled' : ''}>
+                        BUY
+                    </button>
+                `;
+
+                upgradesList.appendChild(upgradeElement);
+            });
+        }
+
+        /**
+         * Purchase an upgrade
+         * @param {string} upgradeId - The ID of the upgrade to purchase
+         */
+        function buyUpgrade(upgradeId) {
+            if (!gameState.gameActive) return;
+
+            const upgrade = upgrades.find(u => u.id === upgradeId);
+            if (!upgrade) return;
+
+            const count = gameState.upgrades[upgradeId];
+            const cost = upgrade.baseCost * Math.pow(1.15, count);
+
+            // Check if player can afford it
+            if (gameState.score >= cost) {
+                // Deduct cost and apply benefit
+                gameState.score -= cost;
+                gameState.perClick += upgrade.benefit;
+                gameState.upgrades[upgradeId]++;
+                gameState.totalUpgradesBought++;
+
+                // Update displays
+                updateDisplay();
+                renderUpgrades();
+            }
+        }
+
+        // ==================== DISPLAY UPDATES ====================
+        /**
+         * Update all game display elements
+         */
+        function updateDisplay() {
+            // Update score
+            document.getElementById('scoreDisplay').textContent = gameState.score;
+            
+            // Update click counter
+            document.getElementById('clickCounter').textContent = gameState.clicks;
+            
+            // Update per-click value
+            document.getElementById('perClickDisplay').textContent = '+' + gameState.perClick;
+            
+            // Update total clicks shown
+            document.getElementById('totalClicks').textContent = gameState.clicks;
+        }
+
+        // ==================== GAME ENDING ====================
+        /**
+         * End the game and show the game over screen
+         */
+        function endGame() {
+            gameState.gameActive = false;
+
+            // Hide game screen, show game over screen
+            document.getElementById('gameScreen').classList.remove('active');
+            document.getElementById('gameOverScreen').classList.add('active');
+
+            // Calculate favorite breed (the one we bought most of)
+            let favoriteBreed = 'None';
+            let maxCount = 0;
+            for (const upgradeId in gameState.upgrades) {
+                const count = gameState.upgrades[upgradeId];
+                if (count > maxCount) {
+                    maxCount = count;
+                    const upgrade = upgrades.find(u => u.id === upgradeId);
+                    favoriteBreed = upgrade ? upgrade.name : 'Unknown';
+                }
+            }
+
+            // Display final stats
+            document.getElementById('finalScore').textContent = gameState.score;
+            document.getElementById('finalClicks').textContent = gameState.clicks;
+            document.getElementById('finalUpgrades').textContent = gameState.totalUpgradesBought;
+            document.getElementById('finalPower').textContent = '+' + gameState.perClick;
+            document.getElementById('favoriteBreed').textContent = favoriteBreed;
+        }
+
+        // ==================== MENU NAVIGATION ====================
+        /**
+         * Restart the game
+         */
+        function restartGame() {
+            document.getElementById('gameOverScreen').classList.remove('active');
+            document.getElementById('gameScreen').classList.add('active');
+            startGame();
+        }
+
+        /**
+         * Return to the main menu
+         */
+        function goToMenu() {
+            document.getElementById('gameOverScreen').classList.remove('active');
+            document.getElementById('startScreen').classList.remove('hidden');
+        }
+
+        // ==================== KEYBOARD CONTROLS ====================
+        /**
+         * Allow spacebar to click the pug
+         */
+        document.addEventListener('keydown', (event) => {
+            if (event.code === 'Space' && gameState.gameActive) {
+                event.preventDefault();
+                clickPug();
+            }
+        });
+    </script>
+</body>
+</html>
