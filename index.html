@@ -776,13 +776,22 @@
                     </div>
                     <div class="upgrade-cost">${Math.floor(cost)}</div>
                     <button class="upgrade-button" 
-                            onclick="buyUpgrade('${upgrade.id}')"
+                            data-id="${upgrade.id}"
+                            data-type="upgrade"
                             ${!canAfford ? 'disabled' : ''}>
                         BUY
                     </button>
                 `;
 
                 upgradesList.appendChild(upgradeElement);
+            });
+
+            // Attach event listeners
+            document.querySelectorAll('[data-type="upgrade"]').forEach(button => {
+                button.onclick = function(e) {
+                    e.preventDefault();
+                    buyUpgrade(this.dataset.id);
+                };
             });
         }
 
@@ -836,13 +845,22 @@
                     </div>
                     <div class="upgrade-cost" style="color: #667eea;">${Math.floor(cost)} clicks</div>
                     <button class="upgrade-button" 
-                            onclick="buyBuilding('${building.id}')"
+                            data-id="${building.id}"
+                            data-type="building"
                             ${!canAfford ? 'disabled' : ''}>
                         BUY
                     </button>
                 `;
 
                 buildingsList.appendChild(buildingElement);
+            });
+
+            // Attach event listeners
+            document.querySelectorAll('[data-type="building"]').forEach(button => {
+                button.onclick = function(e) {
+                    e.preventDefault();
+                    buyBuilding(this.dataset.id);
+                };
             });
         }
 
